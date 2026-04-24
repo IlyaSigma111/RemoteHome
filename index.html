@@ -3,21 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Умный Дом - Проект для урока технологии</title>
+  <title>Умный Дом - Схема системы</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-primary: #0f0f1a;
-      --bg-secondary: #1a1a2e;
-      --bg-card: #16213e;
+      --bg-primary: #0a0a12;
+      --bg-secondary: #12121f;
+      --bg-card: #1a1a2e;
       --accent: #00d4ff;
       --accent-secondary: #7b2cbf;
       --text-primary: #ffffff;
-      --text-secondary: #a0a0b0;
+      --text-secondary: #8892a0;
       --success: #00ff88;
-      --warning: #ffaa00;
-      --danger: #ff4757;
+      --line-color: #2a3a4a;
     }
 
     * {
@@ -32,473 +31,514 @@
       color: var(--text-primary);
       min-height: 100vh;
       background-image: 
-        radial-gradient(ellipse at 20% 20%, rgba(123, 44, 191, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
-      padding-bottom: 80px;
+        radial-gradient(ellipse at 50% 50%, rgba(123, 44, 191, 0.08) 0%, transparent 60%);
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 40px 20px;
+      padding: 30px 20px;
     }
 
     header {
       text-align: center;
-      margin-bottom: 50px;
+      margin-bottom: 30px;
     }
 
     header h1 {
-      font-size: 2.8rem;
+      font-size: 2rem;
       font-weight: 700;
       background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 15px;
     }
 
     header .subtitle {
       color: var(--text-secondary);
-      font-size: 1.2rem;
-      margin-bottom: 20px;
+      font-size: 1rem;
+      margin-top: 8px;
     }
 
     .signature {
       display: inline-block;
       background: var(--bg-secondary);
-      padding: 12px 30px;
-      border-radius: 30px;
+      padding: 8px 20px;
+      border-radius: 20px;
       border: 1px solid var(--accent);
       color: var(--accent);
+      font-size: 0.9rem;
       font-weight: 500;
+      margin-top: 15px;
     }
 
-    .section {
+    .schema-container {
       background: var(--bg-secondary);
-      border-radius: 24px;
+      border-radius: 30px;
       padding: 40px;
-      margin-bottom: 30px;
+      position: relative;
     }
 
-    .section h2 {
-      font-size: 1.8rem;
-      margin-bottom: 25px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
+    .center-house {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 140px;
+      height: 140px;
+      cursor: pointer;
+      transition: all 0.3s;
     }
 
-    .section h2 .icon {
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
+    .center-house:hover {
+      transform: translate(-50%, -50%) scale(1.1);
     }
 
-    .section p {
-      color: var(--text-secondary);
-      line-height: 1.8;
-      font-size: 1.05rem;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      margin-top: 25px;
-    }
-
-    .feature-card {
-      background: var(--bg-card);
-      border-radius: 16px;
-      padding: 25px;
-      text-align: center;
-    }
-
-    .feature-card .feature-icon {
-      font-size: 2.5rem;
-      margin-bottom: 15px;
-    }
-
-    .feature-card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      color: var(--accent);
-    }
-
-    .feature-card p {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-    }
-
-    .devices-table {
+    .center-house svg {
       width: 100%;
-      border-collapse: collapse;
-      margin-top: 25px;
+      height: 100%;
+      filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.4));
     }
 
-    .devices-table th,
-    .devices-table td {
-      padding: 18px 15px;
-      text-align: left;
-      border-bottom: 1px solid var(--bg-card);
-    }
-
-    .devices-table th {
+    .device-node {
+      position: absolute;
+      width: 80px;
+      height: 80px;
       background: var(--bg-card);
-      font-weight: 600;
-      color: var(--accent);
-    }
-
-    .devices-table tr:hover td {
-      background: var(--bg-card);
-    }
-
-    .devices-table .device-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--bg-card);
-      border-radius: 10px;
-      display: inline-flex;
+      border-radius: 50%;
+      display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid var(--line-color);
     }
 
-    .devices-table .device-icon svg {
-      width: 22px;
-      height: 22px;
+    .device-node:hover {
+      transform: scale(1.15);
+      border-color: var(--accent);
+      box-shadow: 0 0 25px rgba(0, 212, 255, 0.3);
+    }
+
+    .device-node svg {
+      width: 36px;
+      height: 36px;
       fill: var(--accent);
     }
 
-    .devices-table .status-on {
-      color: var(--success);
-    }
-
-    .devices-table .status-off {
+    .device-node .label {
+      position: absolute;
+      bottom: -25px;
+      font-size: 0.75rem;
       color: var(--text-secondary);
+      white-space: nowrap;
     }
 
-    .house-schema {
-      display: flex;
+    .device-node .status {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--success);
+      border: 3px solid var(--bg-secondary);
+    }
+
+    .device-node .status.off {
+      background: var(--text-secondary);
+    }
+
+    /* Lines connecting devices to house */
+    .connection-line {
+      position: absolute;
+      background: var(--line-color);
+      transform-origin: 0 50%;
+    }
+
+    /* Device positions around the house */
+    .node-1 { left: calc(50% - 220px); top: 50%; transform: translateY(-50%); }
+    .node-2 { left: calc(50% - 160px); top: 25%; }
+    .node-3 { left: calc(50% + 80px); top: 25%; }
+    .node-4 { left: calc(50% + 220px); top: 50%; transform: translateY(-50%); }
+    .node-5 { left: calc(50% + 220px); top: 50%; transform: translateY(-50%); }
+    .node-6 { left: calc(50% - 220px); top: 75%; }
+
+    /* Connection lines */
+    .line-1 { left: calc(50% - 70px); top: 50%; width: 110px; height: 2px; }
+    .line-2 { left: calc(50% - 50px); top: calc(50% - 50px); width: 80px; height: 2px; transform: rotate(-45deg); }
+    .line-3 { left: calc(50% + 40px); top: calc(50% - 50px); width: 80px; height: 2px; transform: rotate(45deg); }
+    .line-4 { left: calc(50% + 70px); top: 50%; width: 110px; height: 2px; }
+    .line-5 { left: calc(50% + 70px); top: 50%; width: 110px; height: 2px; }
+    .line-6 { left: calc(50% - 180px); top: 75%; width: 80px; height: 2px; transform: rotate(45deg); }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      align-items: center;
       justify-content: center;
-      margin: 30px 0;
+      padding: 20px;
     }
 
-    .house-img {
-      max-width: 400px;
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-secondary);
+      border-radius: 24px;
+      max-width: 450px;
       width: 100%;
-      opacity: 0.9;
+      padding: 35px;
+      position: relative;
+      border: 1px solid var(--accent);
+      animation: modalIn 0.3s ease;
     }
 
-    .pros-cons {
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 35px;
+      height: 35px;
+      background: var(--bg-card);
+      border: none;
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .modal-close:hover {
+      background: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .modal-icon {
+      width: 70px;
+      height: 70px;
+      background: var(--bg-card);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-icon svg {
+      width: 38px;
+      height: 38px;
+      fill: var(--accent);
+    }
+
+    .modal-header h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .modal-section {
+      margin-bottom: 20px;
+    }
+
+    .modal-section h3 {
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .info-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 30px;
-      margin-top: 25px;
+      gap: 12px;
     }
 
-    .pros, .cons {
-      padding: 25px;
-      border-radius: 16px;
-    }
-
-    .pros {
-      background: rgba(0, 255, 136, 0.1);
-      border: 1px solid var(--success);
-    }
-
-    .cons {
-      background: rgba(255, 71, 87, 0.1);
-      border: 1px solid var(--danger);
-    }
-
-    .pros h3, .cons h3 {
-      margin-bottom: 20px;
-      font-size: 1.3rem;
-    }
-
-    .pros h3 { color: var(--success); }
-    .cons h3 { color: var(--danger); }
-
-    .pros ul, .cons ul {
-      list-style: none;
-    }
-
-    .pros li, .cons li {
-      padding: 10px 0;
-      padding-left: 25px;
-      position: relative;
-      color: var(--text-secondary);
-    }
-
-    .pros li::before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      color: var(--success);
-    }
-
-    .cons li::before {
-      content: "✗";
-      position: absolute;
-      left: 0;
-      color: var(--danger);
-    }
-
-    .diagramm {
-      margin-top: 25px;
-    }
-
-    .diagram-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-
-    .diagram-label {
-      width: 150px;
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-    }
-
-    .diagram-bar {
-      flex: 1;
-      height: 30px;
+    .info-item {
       background: var(--bg-card);
-      border-radius: 8px;
-      overflow: hidden;
+      padding: 15px;
+      border-radius: 12px;
     }
 
-    .diagram-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
-      border-radius: 8px;
+    .info-item .label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 5px;
+    }
+
+    .info-item .value {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .description {
+      background: var(--bg-card);
+      padding: 18px;
+      border-radius: 12px;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .toggle-btn {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      padding-right: 15px;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      border: none;
+      border-radius: 14px;
+      color: white;
+      font-size: 1rem;
       font-weight: 600;
-      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
     }
 
-    .conclusion {
-      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
-      border: 2px solid var(--accent);
+    .toggle-btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4);
     }
 
-    .author-info {
+    .toggle-btn.off {
+      background: var(--bg-card);
+      border: 1px solid var(--text-secondary);
+    }
+
+    .instruction {
       text-align: center;
-      margin-top: 40px;
-      padding: 30px;
-      background: var(--bg-secondary);
-      border-radius: 20px;
-    }
-
-    .author-info h2 {
-      font-size: 1.5rem;
-      margin-bottom: 15px;
-      color: var(--accent);
-    }
-
-    .author-info p {
-      font-size: 1.1rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>🏠 Умный Дом</h1>
-      <p class="subtitle">Проект по технологии</p>
+      <h1>🏠 Структура умного дома</h1>
+      <p class="subtitle">Интерактивная схема системы</p>
       <div class="signature">Гульков Илья 9Г 2026</div>
     </header>
 
-    <div class="section">
-      <h2><span class="icon">💡</span> Что такое умный дом?</h2>
-      <p>
-        <strong>Умный дом</strong> — это система автоматизации жилых помещений, которая объединяет все бытовые приборы и инженерные системы в единую сеть. Управление всеми устройствами осуществляется через смартфон, планшет или голосовые команды. Главная цель — сделать жизнь комфортнее, безопаснее и экономичнее.
-      </p>
-      <p style="margin-top: 15px;">
-        Система включает: освещение, отопление, охранную сигнализацию, видеонаблюдение, умные замки, бытовую технику и многое другое. Все устройства связаны через <strong>IoT (Internet of Things)</strong> — интернет вещей.
-      </p>
-    </div>
-
-    <div class="section">
-      <h2><span class="icon">✨</span> Преимущества умного дома</h2>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">🔒</div>
-          <h3>Безопасность</h3>
-          <p>Видеонаблюдение, датчики движения и умные замки защищают дом 24/7</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">⚡</div>
-          <h3>Экономия энергии</h3>
-          <p>Автоматическое отключение света и отопления экономит до 40% расходов</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">📱</div>
-          <h3>Удалённое управление</h3>
-          <p>Управляйте домом из любой точки мира через смартфон</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🎯</div>
-          <h3>Комфорт</h3>
-          <p>Автоматические сценарии: "Утро", "Кино", "Ночь" — всё нажатием кнопки</p>
-        </div>
+    <div class="schema-container">
+      <!-- Center House -->
+      <div class="center-house" onclick="centerHousePulse()">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="var(--accent)" opacity="0.2" stroke="var(--accent)" stroke-width="1.5"/>
+          <polyline points="9 22 9 12 15 12 15 22" stroke="var(--accent)" stroke-width="1.5" fill="none"/>
+          <circle cx="12" cy="8" r="2" fill="var(--accent)"/>
+        </svg>
       </div>
-    </div>
 
-    <div class="section">
-      <h2><span class="icon">📋</span> Устройства умного дома</h2>
-      <table class="devices-table">
-        <thead>
-          <tr>
-            <th>Устройство</th>
-            <th>Назначение</th>
-            <th>Примеры</th>
-            <th>Статус</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div class="device-icon">
-                <svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2v1M21 12h1M3 12H2M18.4 5.6l.7-.7M5.6 5.6l-.7-.7"/><path d="M17 12a5 5 0 1 0-5 5"/></svg>
-              </div>
-              Умное освещение
-            </td>
-            <td>Регулировка яркости и цвета</td>
-            <td>Philips Hue, Xiaomi Yeelight</td>
-            <td class="status-on">● Включено</td>
-          </tr>
-          <tr>
-            <td>
-              <div class="device-icon">
-                <svg viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
-              </div>
-              Термостат
-            </td>
-            <td>Контроль температуры</td>
-            <td>Nest, Xiaomi</td>
-            <td class="status-on">● Включено</td>
-          </tr>
-          <tr>
-            <td>
-              <div class="device-icon">
-                <svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-              </div>
-              Камеры
-            </td>
-            <td>Видеонаблюдение</td>
-            <td>Ring, Reolink</td>
-            <td class="status-on">● Запись</td>
-          </tr>
-          <tr>
-            <td>
-              <div class="device-icon">
-                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              </div>
-              Умный замок
-            </td>
-            <td>Контроль доступа</td>
-            <td>August, Aqara</td>
-            <td class="status-on">● Закрыт</td>
-          </tr>
-          <tr>
-            <td>
-              <div class="device-icon">
-                <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="14" r="4"/></svg>
-              </div>
-              Голосовой ассистент
-            </td>
-            <td>Управление голосом</td>
-            <td>Алиса, Alexa, Google Home</td>
-            <td class="status-off">○ Ожидание</td>
-          </tr>
-          <tr>
-            <td>
-              <div class="device-icon">
-                <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0"/></svg>
-              </div>
-              Wi-Fi роутер
-            </td>
-            <td>Связь всех устройств</td>
-            <td>ASUS, TP-Link</td>
-            <td class="status-on">● Онлайн</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="section">
-      <h2><span class="icon">🏠</span> Схема работы системы</h2>
-      <p style="text-align: center; margin-bottom: 20px;">Центральный хаб собирает данные от всех устройств и передаёт их в облако или на смартфон</p>
-      <div class="diagramm">
-        <div class="diagram-item">
-          <div class="diagram-label">Датчики</div>
-          <div class="diagram-bar"><div class="diagram-fill" style="width: 30%;">30%</div></div>
-        </div>
-        <div class="diagram-item">
-          <div class="diagram-label">Хаб (шлюз)</div>
-          <div class="diagram-bar"><div class="diagram-fill" style="width: 20%;">20%</div></div>
-        </div>
-        <div class="diagram-item">
-          <div class="diagram-label">Облако</div>
-          <div class="diagram-bar"><div class="diagram-fill" style="width: 25%;">25%</div></div>
-        </div>
-        <div class="diagram-item">
-          <div class="diagram-label">Смартфон</div>
-          <div class="diagram-bar"><div class="diagram-fill" style="width: 25%;">25%</div></div>
-        </div>
+      <!-- Device Nodes -->
+      <div class="device-node node-1" onclick="openDevice('wifi')">
+        <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+        <span class="label">Wi-Fi</span>
+        <div class="status"></div>
       </div>
-    </div>
 
-    <div class="section">
-      <h2><span class="icon">📊</span> Плюсы и минусы</h2>
-      <div class="pros-cons">
-        <div class="pros">
-          <h3>✅ Преимущества</h3>
-          <ul>
-            <li>Комфорт и удобство</li>
-            <li>Экономия электроэнергии</li>
-            <li>Безопасность</li>
-            <li>Удалённый контроль</li>
-            <li>Автоматизация процессов</li>
-          </ul>
-        </div>
-        <div class="cons">
-          <h3>❌ Недостатки</h3>
-          <ul>
-            <li>Высокая стоимость</li>
-            <li>Зависимость от интернета</li>
-            <li>Сложность настройки</li>
-            <li>Проблемы приватности</li>
-            <li>Требует электричество</li>
-          </ul>
-        </div>
+      <div class="device-node node-2" onclick="openDevice('light')">
+        <svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2v1M21 12h1M3 12H2M18.4 5.6l.7-.7M5.6 5.6l-.7-.7" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>
+        <span class="label">Свет</span>
+        <div class="status"></div>
       </div>
+
+      <div class="device-node node-3" onclick="openDevice('camera')">
+        <svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z" fill="currentColor"/><rect x="1" y="5" width="15" height="14" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        <span class="label">Камера</span>
+        <div class="status"></div>
+      </div>
+
+      <div class="device-node node-4" onclick="openDevice('lock')">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        <span class="label">Замок</span>
+        <div class="status"></div>
+      </div>
+
+      <div class="device-node node-5" onclick="openDevice('thermostat')">
+        <svg viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" fill="currentColor"/></svg>
+        <span class="label">Климат</span>
+        <div class="status"></div>
+      </div>
+
+      <div class="device-node node-6" onclick="openDevice('speaker')">
+        <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="12" cy="14" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        <span class="label">Колонка</span>
+        <div class="status off"></div>
+      </div>
+
+      <!-- Connection Lines (SVG) -->
+      <svg style="position: absolute; inset: 0; pointer-events: none;" viewBox="0 0 100% 100%">
+        <line x1="50%" y1="50%" x2="28%" y2="50%" stroke="var(--line-color)" stroke-width="2" stroke-dasharray="5,5"/>
+        <line x1="50%" y1="50%" x2="35%" y2="25%" stroke="var(--line-color)" stroke-width="2" stroke-dasharray="5,5"/>
+        <line x1="50%" y1="50%" x2="65%" y2="25%" stroke="var(--line-color)" stroke-width="2" stroke-dasharray="5,5"/>
+        <line x1="50%" y1="50%" x2="72%" y2="50%" stroke="var(--line-color)" stroke-width="2" stroke-dasharray="5,5"/>
+        <line x1="50%" y1="50%" x2="28%" y2="75%" stroke="var(--line-color)" stroke-width="2" stroke-dasharray="5,5"/>
+      </svg>
     </div>
 
-    <div class="section conclusion">
-      <h2><span class="icon">🎓</span> Заключение</h2>
-      <p>
-        Умный дом — это технология будущего, которая делает нашу жизнь комфортнее и безопаснее. Хотя система требует initial investment, она окупается за счёт экономии энергии и повышения безопасности. С каждым годом технологии становятся доступнее, и скоро умный дом будет в каждом доме.
-      </p>
-      <p style="margin-top: 15px;">
-        В этом проекте мы рассмотрели основные устройства умного дома, их назначение и принцип работы. С помощью интерактивной модели выше можно увидеть, как все устройства связаны в единую систему.
-      </p>
-    </div>
+    <p class="instruction">👆 Нажмите на устройство для подробностей</p>
+  </div>
 
-    <div class="author-info">
-      <h2>👨‍🎓 Гульков Илья</h2>
-      <p>Ученик 9Г класса | 2026 год | Проект по технологии</p>
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div class="modal-header">
+        <div class="modal-icon" id="modalIcon"></div>
+        <h2 id="modalTitle">Устройство</h2>
+      </div>
+      <div class="modal-section">
+        <h3>Описание</h3>
+        <div class="description" id="modalDesc"></div>
+      </div>
+      <div class="modal-section">
+        <h3>Характеристики</h3>
+        <div class="info-grid" id="modalInfo"></div>
+      </div>
+      <button class="toggle-btn" id="modalToggle" onclick="toggleDevice()">Включить</button>
     </div>
   </div>
+
+  <script>
+    const devices = {
+      wifi: {
+        name: 'Wi-Fi Роутер',
+        icon: '<svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" stroke="currentColor" stroke-width="2" fill="none"/></svg>',
+        on: true,
+        desc: 'Центральный беспроводной маршрутизатор, обеспечивающий связь всех умных устройств в доме. Он же хаб (шлюз) для интернета вещей.',
+        info: [
+          { label: 'Модель', value: 'ASUS RT-AX88U' },
+          { label: 'Скорость', value: '6000 Мбит/с' },
+          { label: 'Устройств', value: '12 подкл.' },
+          { label: 'IP', value: '192.168.1.1' }
+        ]
+      },
+      light: {
+        name: 'Умное освещение',
+        icon: '<svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2v1M21 12h1M3 12H2M18.4 5.6l.7-.7M5.6 5.6l-.7-.7" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>',
+        on: true,
+        desc: 'Светодиодные лампы с регулировкой яркости и цвета. Управляются со смартфона или голосом. Можно настроить сценарии освещения.',
+        info: [
+          { label: 'Лампы', value: '12 шт.' },
+          { label: 'Яркость', value: '75%' },
+          { label: 'Цвет', value: 'Тёплый белый' },
+          { label: 'Мощность', value: '9 Вт/ламп.' }
+        ]
+      },
+      camera: {
+        name: 'Камера видеонаблюдения',
+        icon: '<svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z" fill="currentColor"/><rect x="1" y="5" width="15" height="14" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>',
+        on: true,
+        desc: 'Комнатная камера с HD качеством и ночным видением. Пишет видео в облако. Датчик движения отправляет уведомления на телефон.',
+        info: [
+          { label: 'Разрешение', value: '1080p' },
+          { label: 'Угол обзора', value: '130°' },
+          { label: 'Ночной режим', value: 'Вкл.' },
+          { label: 'Запись', value: 'Облако' }
+        ]
+      },
+      lock: {
+        name: 'Умный замок',
+        icon: '<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>',
+        on: true,
+        desc: 'Электронный замок с открытием по отпечатку пальца, NFC или коду. Автоматически блокируется при выходе из дома.',
+        info: [
+          { label: 'Модель', value: 'Aqara U100' },
+          { label: 'Способы', value: 'NFC, код' },
+          { label: 'Автоблок', value: '30 сек' },
+          { label: 'Батарея', value: '~12 мес.' }
+        ]
+      },
+      thermostat: {
+        name: 'Климат-контроль',
+        icon: '<svg viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" fill="currentColor"/></svg>',
+        on: true,
+        desc: 'Умный термостат управляет отоплением и кондиционером. Поддерживает заданную температуру автоматически, экономя энергию.',
+        info: [
+          { label: 'Сейчас', value: '22°C' },
+          { label: 'Цель', value: '21°C' },
+          { label: 'Влажность', value: '45%' },
+          { label: 'Режим', value: 'Авто' }
+        ]
+      },
+      speaker: {
+        name: 'Голосовая колонка',
+        icon: '<svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="12" cy="14" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>',
+        on: false,
+        desc: 'Умная колонка с голосовым ассистентом. Управляет всеми устройствами голосом, включает музыку, отвечает на вопросы.',
+        info: [
+          { label: 'Модель', value: 'Яндекс.Станция' },
+          { label: 'Ассистент', value: 'Алиса' },
+          { label: 'Громкость', value: '50%' },
+          { label: 'Музыка', value: 'Пауза' }
+        ]
+      }
+    };
+
+    let currentDevice = null;
+
+    function openDevice(id) {
+      currentDevice = devices[id];
+      document.getElementById('modalIcon').innerHTML = currentDevice.icon;
+      document.getElementById('modalTitle').textContent = currentDevice.name;
+      document.getElementById('modalDesc').textContent = currentDevice.desc;
+      document.getElementById('modalInfo').innerHTML = currentDevice.info.map(item => `
+        <div class="info-item">
+          <div class="label">${item.label}</div>
+          <div class="value">${item.value}</div>
+        </div>
+      `).join('');
+      document.getElementById('modalToggle').textContent = currentDevice.on ? 'Выключить' : 'Включить';
+      document.getElementById('modalToggle').className = currentDevice.on ? 'toggle-btn' : 'toggle-btn off';
+      document.getElementById('modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+      currentDevice = null;
+    }
+
+    function toggleDevice() {
+      if (currentDevice) {
+        currentDevice.on = !currentDevice.on;
+        openDevice(currentDevice.id);
+      }
+    }
+
+    function centerHousePulse() {
+      document.querySelector('.center-house').style.animation = 'none';
+      setTimeout(() => {
+        document.querySelector('.center-house').style.animation = '';
+      }, 10);
+    }
+
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target.id === 'modal') closeModal();
+    });
+  </script>
 </body>
 </html>
