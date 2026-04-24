@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Умный Дом</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0f0f1a;
+      --bg-secondary: #1a1a2e;
+      --bg-card: #16213e;
+      --accent: #00d4ff;
+      --accent-secondary: #7b2cbf;
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0b0;
+      --success: #00ff88;
+      --warning: #ffaa00;
+      --danger: #ff4757;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(ellipse at 20% 20%, rgba(123, 44, 191, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    .house-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 80px;
+    }
+
+    .house {
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 20px 60px rgba(0, 212, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .house::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .house:hover {
+      transform: scale(1.1) translateY(-10px);
+      box-shadow: 0 30px 80px rgba(0, 212, 255, 0.4);
+    }
+
+    .house:hover::before {
+      opacity: 0.1;
+    }
+
+    .house svg {
+      width: 100px;
+      height: 100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .devices-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+
+    .device-card {
+      background: var(--bg-secondary);
+      border-radius: 20px;
+      padding: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .device-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .device-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(0, 212, 255, 0.15);
+    }
+
+    .device-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .device-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--bg-card), var(--bg-primary));
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .device-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: var(--accent);
+    }
+
+    .device-card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .device-card .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .device-card .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--success);
+      animation: pulse 2s infinite;
+    }
+
+    .device-card .status-dot.off {
+      background: var(--text-secondary);
+      animation: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-secondary);
+      border-radius: 24px;
+      max-width: 500px;
+      width: 100%;
+      padding: 40px;
+      position: relative;
+      animation: modalIn 0.3s ease;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.9) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background: var(--bg-card);
+      border: none;
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .modal-close:hover {
+      background: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .modal-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--bg-card);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-icon svg {
+      width: 44px;
+      height: 44px;
+      fill: var(--accent);
+    }
+
+    .modal-header h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .modal-info {
+      display: grid;
+      gap: 16px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px;
+      background: var(--bg-card);
+      border-radius: 12px;
+    }
+
+    .info-row .label {
+      color: var(--text-secondary);
+    }
+
+    .info-row .value {
+      font-weight: 600;
+    }
+
+    .toggle-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      padding: 20px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      border: none;
+      border-radius: 16px;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 20px;
+    }
+
+    .toggle-btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+    }
+
+    .toggle-btn.off {
+      background: var(--bg-card);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      margin-top: 60px;
+    }
+
+    .stat-card {
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .stat-card .value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .stat-card .label {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🏠 Умный Дом</h1>
+      <p>Управляйте всеми устройствами в одном месте</p>
+    </header>
+
+    <div class="house-container">
+      <div class="house" onclick="toggleHouse()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="var(--accent)"/>
+          <polyline points="9 22 9 12 15 12 15 22" stroke="var(--accent)"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="value" id="totalDevices">8</div>
+        <div class="label">Устройств</div>
+      </div>
+      <div class="stat-card">
+        <div class="value" id="activeDevices">5</div>
+        <div class="label">Активных</div>
+      </div>
+      <div class="stat-card">
+        <div class="value" id="energyUsage">2.4 кВт</div>
+        <div class="label">Потребление</div>
+      </div>
+      <div class="stat-card">
+        <div class="value" id="savings">35%</div>
+        <div class="label">Экономия</div>
+      </div>
+    </div>
+
+    <div class="devices-grid" id="devicesGrid"></div>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div class="modal-header">
+        <div class="modal-icon" id="modalIcon"></div>
+        <h2 id="modalTitle">Устройство</h2>
+      </div>
+      <div class="modal-info" id="modalInfo"></div>
+      <button class="toggle-btn" id="modalToggle" onclick="toggleDevice()">Включить</button>
+    </div>
+  </div>
+
+  <script>
+    const devices = [
+      {
+        id: 'light',
+        name: 'Освещение',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2v1M21 12h1M3 12H2M18.4 5.6l.7-.7M5.6 5.6l-.7-.7" stroke="currentColor" stroke-linecap="round"/><path d="M17 12a5 5 0 1 0-5 5" fill="currentColor"/></svg>',
+        on: true,
+        info: [
+          { label: 'Яркость', value: '75%' },
+          { label: 'Мощность', value: '15 Вт' },
+          { label: 'Цветовая температура', value: '4000K' },
+          { label: 'Режим', value: 'Ночник' }
+        ]
+      },
+      {
+        id: 'thermostat',
+        name: 'Термостат',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" fill="currentColor"/></svg>',
+        on: true,
+        info: [
+          { label: 'Текущая температура', value: '22°C' },
+          { label: 'Целевая температура', value: '21°C' },
+          { label: 'Влажность', value: '45%' },
+          { label: 'Режим', value: 'Авто' }
+        ]
+      },
+      {
+        id: 'camera',
+        name: 'Камера видеонаблюдения',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z" fill="currentColor"/><rect x="1" y="5" width="15" height="14" rx="2" stroke="currentColor"/></svg>',
+        on: true,
+        info: [
+          { label: 'Статус', value: 'Запись' },
+          { label: 'Разрешение', value: '4K Ultra HD' },
+          { label: 'Угол обзора', value: '160°' },
+          { label: 'Ночное видение', value: 'Включено' }
+        ]
+      },
+      {
+        id: 'lock',
+        name: 'Умный замок',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor"/></svg>',
+        on: true,
+        info: [
+          { label: 'Статус', value: 'Закрыто' },
+          { label: 'Способ разблокировки', value: 'Отпечаток / NFC' },
+          { label: 'Последний вход', value: '10 минут назад' },
+          { label: 'Автоблокировка', value: 'Через 30 сек' }
+        ]
+      },
+      {
+        id: 'speaker',
+        name: 'Умная колонка',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" stroke="currentColor"/><circle cx="12" cy="14" r="4" stroke="currentColor"/><path d="M12 6v4M8 10h8" stroke="currentColor"/></svg>',
+        on: false,
+        info: [
+          { label: 'Статус', value: 'Ожидание' },
+          { label: 'Громкость', value: '50%' },
+          { label: 'Активный ассистент', value: 'Алиса' },
+          { label: 'Музыка', value: 'Не воспроизводится' }
+        ]
+      },
+      {
+        id: 'tv',
+        name: 'Умный телевизор',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2" stroke="currentColor"/><path d="M17 2l-5 5-5-5" stroke="currentColor"/></svg>',
+        on: true,
+        info: [
+          { label: 'Статус', value: 'Включен' },
+          { label: 'Канал', value: 'Первый канал' },
+          { label: 'Яркость', value: '80%' },
+          { label: 'Режим изображения', value: 'Кино' }
+        ]
+      },
+      {
+        id: 'fridge',
+        name: 'Умный холодильник',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" stroke="currentColor"/><line x1="4" y1="10" x2="20" y2="10" stroke="currentColor"/><circle cx="12" cy="15" r="2" fill="currentColor"/></svg>',
+        on: true,
+        info: [
+          { label: 'Температура морозильник', value: '-18°C' },
+          { label: 'Температура холодильник', value: '4°C' },
+          { label: 'Режим энергосбережения', value: 'Включен' },
+          { label: 'Срок годности', value: '3 продукта скоро истекут' }
+        ]
+      },
+      {
+        id: 'wifi',
+        name: 'Wi-Fi роутер',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" stroke="currentColor" stroke-linecap="round"/></svg>',
+        on: true,
+        info: [
+          { label: 'Статус', value: 'Онлайн' },
+          { label: 'Скорость', value: '500 Мбит/с' },
+          { label: 'Подключено устройств', value: '12' },
+          { label: 'IP адрес', value: '192.168.1.1' }
+        ]
+      }
+    ];
+
+    let currentDevice = null;
+    let houseOn = true;
+
+    function renderDevices() {
+      const grid = document.getElementById('devicesGrid');
+      grid.innerHTML = devices.map(device => `
+        <div class="device-card" onclick="openModal('${device.id}')">
+          <div class="device-icon">${device.icon}</div>
+          <h3>${device.name}</h3>
+          <div class="status">
+            <div class="status-dot ${device.on ? '' : 'off'}"></div>
+            ${device.on ? 'Включено' : 'Выключено'}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateStats() {
+      const active = devices.filter(d => d.on).length;
+      document.getElementById('activeDevices').textContent = active;
+      document.getElementById('energyUsage').textContent = (active * 0.3).toFixed(1) + ' кВт';
+    }
+
+    function openModal(id) {
+      currentDevice = devices.find(d => d.id === id);
+      document.getElementById('modalIcon').innerHTML = currentDevice.icon;
+      document.getElementById('modalTitle').textContent = currentDevice.name;
+      document.getElementById('modalInfo').innerHTML = currentDevice.info.map(item => `
+        <div class="info-row">
+          <span class="label">${item.label}</span>
+          <span class="value">${item.value}</span>
+        </div>
+      `).join('');
+      document.getElementById('modalToggle').textContent = currentDevice.on ? 'Выключить' : 'Включить';
+      document.getElementById('modalToggle').className = currentDevice.on ? 'toggle-btn' : 'toggle-btn off';
+      document.getElementById('modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+      currentDevice = null;
+    }
+
+    function toggleDevice() {
+      if (currentDevice) {
+        currentDevice.on = !currentDevice.on;
+        renderDevices();
+        updateStats();
+        openModal(currentDevice.id);
+      }
+    }
+
+    function toggleHouse() {
+      houseOn = !houseOn;
+      devices.forEach(d => d.on = houseOn);
+      renderDevices();
+      updateStats();
+    }
+
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target.id === 'modal') closeModal();
+    });
+
+    renderDevices();
+    updateStats();
+  </script>
+</body>
+</html>
