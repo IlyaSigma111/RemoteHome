@@ -606,40 +606,52 @@
         </div>
 
         <!-- Device Nodes -->
-        <div class="device-node" style="left: 50%; top: 15px; transform: translateX(-50%);" onclick="openDevice('wifi')">
+        <div class="device-node" style="left: 50%; top: 12px; transform: translateX(-50%);" onclick="openDevice('wifi')">
           <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
           <div class="status"></div>
           <span class="tooltip">Wi-Fi</span>
         </div>
 
-        <div class="device-node" style="right: 12px; top: 50%; transform: translateY(-50%);" onclick="openDevice('light')">
+        <div class="device-node" style="right: 8px; top: 50%; transform: translateY(-50%);" onclick="openDevice('fridge')">
+          <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="4" y1="10" x2="20" y2="10" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="15" r="2" fill="currentColor"/></svg>
+          <div class="status"></div>
+          <span class="tooltip">Холодильник</span>
+        </div>
+
+        <div class="device-node" style="left: 50%; bottom: 12px; transform: translateX(-50%);" onclick="openDevice('nanny')">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M12 14c-4 0-7 2-7 5v1h14v-1c0-3-3-5-7-5z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+          <div class="status"></div>
+          <span class="tooltip">Няня</span>
+        </div>
+
+        <div class="device-node" style="left: 8px; top: 50%; transform: translateY(-50%);" onclick="openDevice('light')">
           <svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2v1M21 12h1M3 12H2M18.4 5.6l.7-.7M5.6 5.6l-.7-.7" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3.5" fill="currentColor"/></svg>
           <div class="status"></div>
           <span class="tooltip">Свет</span>
         </div>
 
-        <div class="device-node" style="left: 50%; bottom: 15px; transform: translateX(-50%);" onclick="openDevice('camera')">
-          <svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z" fill="currentColor"/><rect x="1" y="5" width="15" height="14" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
-          <div class="status"></div>
-          <span class="tooltip">Камера</span>
-        </div>
-
-        <div class="device-node" style="left: 12px; top: 50%; transform: translateY(-50%);" onclick="openDevice('lock')">
-          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
-          <div class="status"></div>
-          <span class="tooltip">Замок</span>
-        </div>
-
-        <div class="device-node" style="right: 60px; top: 60px;" onclick="openDevice('thermostat')">
+        <div class="device-node" style="right: 55px; top: 55px;" onclick="openDevice('thermostat')">
           <svg viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" fill="currentColor"/></svg>
           <div class="status"></div>
           <span class="tooltip">Климат</span>
         </div>
 
-        <div class="device-node" style="left: 60px; bottom: 60px;" onclick="openDevice('speaker')">
+        <div class="device-node" style="left: 55px; bottom: 55px;" onclick="openDevice('lock')">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+          <div class="status"></div>
+          <span class="tooltip">Замок</span>
+        </div>
+
+        <div class="device-node" style="left: 8px; top: 25px;" onclick="openDevice('speaker')">
           <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="12" cy="14" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
           <div class="status off"></div>
           <span class="tooltip">Колонка</span>
+        </div>
+
+        <div class="device-node" style="right: 8px; top: 25px;" onclick="openDevice('washing')">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="12" y1="3" x2="12" y2="6" stroke="currentColor" stroke-width="1.5"/></svg>
+          <div class="status off"></div>
+          <span class="tooltip">Стирка</span>
         </div>
       </div>
     </div>
@@ -722,72 +734,96 @@
         name: 'Wi-Fi Роутер',
         icon: '<svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>',
         on: true,
-        desc: 'Центральный беспроводной маршрутизатор, обеспечивающий связь всех умных устройств в доме. Он же хаб (шлюз) для интернета вещей.',
+        desc: 'Центральный маршрутизатор обеспечивает Wi-Fi во всём доме. Все умные устройства подключены через него. Поддерживает скорость до 6000 Мбит/с и может обслуживать до 50 устройств одновременно.',
         info: [
           { label: 'Модель', value: 'ASUS RT-AX88U' },
           { label: 'Скорость', value: '6000 Мбит/с' },
-          { label: 'Устройств', value: '12 подкл.' },
-          { label: 'IP', value: '192.168.1.1' }
+          { label: 'Подкл. устройств', value: '24' },
+          { label: 'IP адрес', value: '192.168.1.1' }
+        ]
+      },
+      fridge: {
+        name: 'Умный холодильник',
+        icon: '<svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="4" y1="10" x2="20" y2="10" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="15" r="2" fill="currentColor"/></svg>',
+        on: true,
+        desc: 'Холодильник с двумя камерами и сенсорным дисплеем. Отслеживает содержимое, предупреждает о сроках годности. Можно посмотреть содержимое через камеру на телефоне, не открывая дверь. Экономит энергию благодаря инверторному компрессору.',
+        info: [
+          { label: 'Модель', value: 'Samsung RF-9500' },
+          { label: 'Холодильник', value: '+4°C' },
+          { label: 'Морозильник', value: '-18°C' },
+          { label: 'Энергокласс', value: 'A+++' }
+        ]
+      },
+      nanny: {
+        name: 'Умная Няня',
+        icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M12 14c-4 0-7 2-7 5v1h14v-1c0-3-3-5-7-5z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>',
+        on: true,
+        desc: 'Система видеонаблюдения за ребёнком. Включает HD-камеру, датчики движения и звука, двухстороннюю связь. При плаче или движении отправляет уведомление на телефон. Работает круглосуточно с ночным видением.',
+        info: [
+          { label: 'Камера', value: '1080p HD' },
+          { label: 'Ночное видение', value: '10 метров' },
+          { label: 'Датчики', value: 'движ., звук' },
+          { label: 'Связь', value: 'двусторонняя' }
         ]
       },
       light: {
         name: 'Умное освещение',
         icon: '<svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2v1M21 12h1M3 12H2M18.4 5.6l.7-.7M5.6 5.6l-.7-.7" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3.5" fill="currentColor"/></svg>',
         on: true,
-        desc: 'Светодиодные лампы с регулировкой яркости и цвета. Управляются со смартфона или голосом. Можно настроить сценарии освещения.',
+        desc: 'Светодиодные лампы с регулировкой яркости и цве��а. Управляются голосом или через приложение. Можно настроить режимы: "Утро", "Вечер", "Кино", "Сон". 16 миллионов цветов на выбор.',
         info: [
-          { label: 'Лампы', value: '12 шт.' },
-          { label: 'Яркость', value: '75%' },
-          { label: 'Цвет', value: 'Тёплый белый' },
-          { label: 'Мощность', value: '9 Вт/ламп.' }
-        ]
-      },
-      camera: {
-        name: 'Камера видеонаблюдения',
-        icon: '<svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z" fill="currentColor"/><rect x="1" y="5" width="15" height="14" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>',
-        on: true,
-        desc: 'Комнатная камера с HD качеством и ночным видением. Пишет видео в облако. Датчик движения отправляет уведомления на телефон.',
-        info: [
-          { label: 'Разрешение', value: '1080p' },
-          { label: 'Угол обзора', value: '130°' },
-          { label: 'Ночной режим', value: 'Вкл.' },
-          { label: 'Запись', value: 'Облако' }
-        ]
-      },
-      lock: {
-        name: 'Умный замок',
-        icon: '<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>',
-        on: true,
-        desc: 'Электронный замок с открытием по отпечатку пальца, NFC или коду. Автоматически блокируется при выходе из дома.',
-        info: [
-          { label: 'Модель', value: 'Aqara U100' },
-          { label: 'Способы', value: 'NFC, код' },
-          { label: 'Автоблок', value: '30 сек' },
-          { label: 'Батарея', value: '~12 мес.' }
+          { label: 'Тип ламп', value: 'LED RGB' },
+          { label: 'Количество', value: '14 шт.' },
+          { label: 'Яркость', value: '80%' },
+          { label: 'Режимы', value: '5 сценариев' }
         ]
       },
       thermostat: {
         name: 'Климат-контроль',
         icon: '<svg viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" fill="currentColor"/></svg>',
         on: true,
-        desc: 'Умный термостат управляет отоплением и кондиционером. Поддерживает заданную температуру автоматически, экономя энергию.',
+        desc: 'Умный термостат управляет отоплением и кондиционером. Поддерживает заданную температуру автоматически. Анализирует погоду и привычки, экономит до 30% на отоплении. Управляется со смартфона.',
         info: [
           { label: 'Сейчас', value: '22°C' },
-          { label: 'Цель', value: '21°C' },
+          { label: 'Целевая', value: '21°C' },
           { label: 'Влажность', value: '45%' },
-          { label: 'Режим', value: 'Авто' }
+          { label: 'Экономия', value: '28%' }
+        ]
+      },
+      lock: {
+        name: 'Умный замок',
+        icon: '<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>',
+        on: true,
+        desc: 'Электронный замок с открытием по отпечатку, NFC, коду или через приложение. Автоматически блокируется через 30 секунд. Ведёт журнал всех входов. Батареи хватает на 12 месяцев.',
+        info: [
+          { label: 'Модель', value: 'Aqara U100' },
+          { label: 'Способы открытия', value: '4 способа' },
+          { label: 'Автоблокировка', value: '30 сек.' },
+          { label: 'Батарея', value: '~1 год' }
         ]
       },
       speaker: {
         name: 'Голосовая колонка',
         icon: '<svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="12" cy="14" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>',
         on: false,
-        desc: 'Умная колонка с голосовым ассистентом. Управляет всеми устройствами голосом, включает музыку, отвечает на вопросы.',
+        desc: 'Умная колонка с голосовым ассистентом. Управляет всеми умными устройствами голосом. Включает музыку, читает новости, отвечает на вопросы. Можно использовать как будильник и для напоминаний.',
         info: [
           { label: 'Модель', value: 'Яндекс.Станция' },
           { label: 'Ассистент', value: 'Алиса' },
-          { label: 'Громкость', value: '50%' },
+          { label: 'Звук', value: '30 Вт' },
           { label: 'Музыка', value: 'Пауза' }
+        ]
+      },
+      washing: {
+        name: 'Умная стиральная машина',
+        icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="12" y1="3" x2="12" y2="6" stroke="currentColor" stroke-width="1.5"/></svg>',
+        on: false,
+        desc: 'Стиральная машина с Wi-Fi. Управляется через телефон: можно запустить стирку удалённо. Автоматически определяет тип ткани и выбирает режим. Отправляет уведомление, когда стирка завершена.',
+        info: [
+          { label: 'Модель', value: 'LG F-4V5' },
+          { label: 'Загрузка', value: '8 кг' },
+          { label: 'Скорость', value: '1400 об/мин' },
+          { label: 'Режимы', value: '14 программ' }
         ]
       }
     };
